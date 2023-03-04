@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+	font-family: Arial, sans-serif;
+}
+
+h1 {
+	text-align: center;
+	margin-top: 20px;
+}
+
+p {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+form {
+	margin: 0 auto;
+	width: 400px;
+	padding: 20px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+
+label {
+	display: inline-block;
+	width: 80px;
+	margin-bottom: 10px;
+}
+
+input[type="text"] {
+	padding: 5px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	width: 300px;
+	margin-bottom: 10px;
+}
+
+select {
+	padding: 5px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	width: 300px;
+	margin-bottom: 10px;
+}
+
+button[type="submit"] {
+	padding: 5px 10px;
+	background-color: #4CAF50;
+	color: white;
+	border: none;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+button[type="submit"]:hover {
+	background-color: #3e8e41;
+}
+
+</style>
+	<title>DiscordNotify: Automated Messages through Discord Webhooks
+</title>
+</head>
+<body>
+	<h1>DiscordNotify: Automated Messages through Discord Webhooks
+</h1>
+	<p>Enter your Discord webhook URL and message, and choose the interval between messages below. Then click the button to start sending messages.</p>
+
+	<form id="message-form">
+		<label for="webhook-url">Webhook URL:</label>
+		<input type="text" id="webhook-url" name="webhook-url" required>
+		<br>
+		<label for="message">Message:</label>
+		<input type="text" id="message" name="message" required>
+		<br>
+		<label for="interval">Interval:</label>
+		<select id="interval" name="interval">
+			<option value="5000">5 seconds</option>
+			<option value="10000">10 seconds</option>
+			<option value="30000" selected>30 seconds</option>
+			<option value="60000">1 minute</option>
+			<option value="300000">5 minutes</option>
+			<option value="600000">10 minutes</option>
+			<option value="1800000">30 minutes</option>
+			<option value="3600000">1 hour</option>
+		</select>
+		<br>
+		<button type="submit" id="start-sending-btn">Start Sending Messages</button>
+	</form>
+
+	<script>
+		document.getElementById('message-form').addEventListener('submit', (event) => {
+			event.preventDefault(); // Prevent form submission
+
+			const webhookUrl = document.getElementById('webhook-url').value;
+			const message = document.getElementById('message').value;
+			const interval = document.getElementById('interval').value;
+
+			setInterval(() => {
+				fetch(webhookUrl, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({ content: message })
+				})
+				.then(response => console.log('Message sent!'))
+				.catch(error => console.error('Error sending message:', error));
+			}, interval); // User-selected interval
+		});
+	</script>
+</body>
+</html>
