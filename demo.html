@@ -1,9 +1,10 @@
-<!DOCTYPE html>
 <html>
 <head>
 <style>
 body {
 	font-family: Arial, sans-serif;
+	background-color: #2C2F33;
+	color: #FFF;
 }
 
 h1 {
@@ -20,14 +21,15 @@ form {
 	margin: 0 auto;
 	width: 400px;
 	padding: 20px;
-	border: 1px solid #ccc;
 	border-radius: 5px;
+	background-color: #36393F;
 }
 
 label {
 	display: inline-block;
 	width: 80px;
 	margin-bottom: 10px;
+	color: #FFF;
 }
 
 input[type="text"] {
@@ -36,6 +38,8 @@ input[type="text"] {
 	border-radius: 3px;
 	width: 300px;
 	margin-bottom: 10px;
+	background-color: #40444B;
+	color: #FFF;
 }
 
 select {
@@ -44,11 +48,13 @@ select {
 	border-radius: 3px;
 	width: 300px;
 	margin-bottom: 10px;
+	background-color: #40444B;
+	color: #FFF;
 }
 
 button[type="submit"] {
 	padding: 5px 10px;
-	background-color: #4CAF50;
+	background-color: #7289DA;
 	color: white;
 	border: none;
 	border-radius: 3px;
@@ -56,17 +62,41 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-	background-color: #3e8e41;
+	background-color: #677BC4;
+}
+
+a {
+	color: #FFF;
+}
+
+a:hover {
+	color: #BBB;
+}
+
+.logo {
+  width: 100px;
+  height: 100px;
+  margin: 20px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 </style>
-	<title>DiscordNotify: Automated Messages through Discord Webhooks
-</title>
+	<title>DiscordNotify: Automated Messages through Discord Webhooks</title>
+<link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/DiscordNotify/discordnotify.github.io/main/media/Discord_Notify__Webhook_Tool-removebg-preview.png">
 </head>
 <body>
+<header>
+<center>
+<img src="https://raw.githubusercontent.com/DiscordNotify/discordnotify.github.io/main/media/Discord_Notify__Webhook_Tool-removebg-preview.png" alt="Logo" class="logo">
+</center>
 	<h1>DiscordNotify: Automated Messages through Discord Webhooks
-</h1>
-	<p>Enter your Discord webhook URL and message, and choose the interval between messages below. Then click the button to start sending messages.</p>
+		<a href="https://github.com/DiscordNotify/discordnotify.github.io" target="_blank">
+			<img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" width="32" height="32" alt="GitHub" class="github-icon">
+		</a>
+	</h1>
+	<p>Enter your Discord webhook URL and message, and choose the interval between messages below (in minutes). Then click the button to start sending messages.</p>
 
 	<form id="message-form">
 		<label for="webhook-url">Webhook URL:</label>
@@ -76,16 +106,8 @@ button[type="submit"]:hover {
 		<input type="text" id="message" name="message" required>
 		<br>
 		<label for="interval">Interval:</label>
-		<select id="interval" name="interval">
-			<option value="5000">5 seconds</option>
-			<option value="10000">10 seconds</option>
-			<option value="30000" selected>30 seconds</option>
-			<option value="60000">1 minute</option>
-			<option value="300000">5 minutes</option>
-			<option value="600000">10 minutes</option>
-			<option value="1800000">30 minutes</option>
-			<option value="3600000">1 hour</option>
-		</select>
+		<input type="number" id="interval" name="interval" min="1" max="60" value="5" required>
+		<label for="interval">minutes</label>
 		<br>
 		<button type="submit" id="start-sending-btn">Start Sending Messages</button>
 	</form>
@@ -96,7 +118,7 @@ button[type="submit"]:hover {
 
 			const webhookUrl = document.getElementById('webhook-url').value;
 			const message = document.getElementById('message').value;
-			const interval = document.getElementById('interval').value;
+			const interval = document.getElementById('interval').value * 60000;
 
 			setInterval(() => {
 				fetch(webhookUrl, {
