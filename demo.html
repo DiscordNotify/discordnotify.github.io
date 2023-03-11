@@ -133,5 +133,23 @@ a:hover {
 			}, interval); // User-selected interval
 		});
 	</script>
+	<script>
+		const webhookUrlInput = document.getElementById('webhook-url');
+
+webhookUrlInput.addEventListener('input', () => {
+  const webhookUrl = webhookUrlInput.value;
+  const webhookUrlRegex = /https:\/\/discord\.com\/api\/webhooks\/\d+\/[\w-]+/;
+  const isValidWebhookUrl = webhookUrlRegex.test(webhookUrl);
+  const errorMessage = document.getElementById('webhook-url-error-message');
+  
+  if (isValidWebhookUrl) {
+    webhookUrlInput.setCustomValidity('');
+    errorMessage.textContent = '';
+  } else {
+    webhookUrlInput.setCustomValidity('Invalid Discord webhook URL');
+    errorMessage.textContent = 'Please enter a valid Discord webhook URL';
+  }
+});
+	</script>
 </body>
 </html>
